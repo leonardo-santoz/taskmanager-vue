@@ -5,7 +5,7 @@
             <h1 class="font-weight-light">Lista de Tarefas</h1>
         </div>
         <div class="col-sm-2">
-            <button class="btn btn-primary float-right" @click="exibirFormulario = !exibirFormulario">
+            <button class="btn btn-primary float-right" @click="exibirFormularioCriarTarefa">
                 <i class="fa fa-plus mr-2"></i>
                 <span>Criar</span>
             </button>
@@ -13,7 +13,7 @@
     </div>
 
     <ul class="list-group" v-if="tarefas.length > 0">
-        <TarefasListaIten v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" @deletar="deletarTarefa" />
+        <TarefasListaIten v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" @deletar="deletarTarefa" @concluir="editarTarefa" />
     </ul>
 
     <p v-else>Nenhuma tarefa criada.</p>
@@ -81,6 +81,15 @@ export default {
                     location.reload();
                 });
             }
+        },
+        // eslint-disable-next-line no-unused-vars
+        exibirFormularioCriarTarefa(event) {
+            if (this.tarefaSelecionada) {
+                this.tarefaSelecionada = undefined;
+                return
+            }
+
+            this.exibirFormulario = !this.exibirFormulario;
         },
         resetar() {
             this.tarefaSelecionada = undefined;

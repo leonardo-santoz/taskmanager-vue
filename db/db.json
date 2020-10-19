@@ -3,7 +3,7 @@
     {
       "id": 3,
       "titulo": "Aprender Axios",
-      "concluido": false
+      "concluido": true
     },
     {
       "titulo": "Aprender vuetify",
@@ -12,7 +12,7 @@
     },
     {
       "titulo": "Aprender neo4j",
-      "concluido": false,
+      "concluido": true,
       "id": 5
     }
   ]
