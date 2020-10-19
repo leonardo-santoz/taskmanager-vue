@@ -13,12 +13,12 @@
     </div>
 
     <ul class="list-group" v-if="tarefas.length > 0">
-        <TarefasListaIten v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" />
+        <TarefasListaIten v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" />
     </ul>
 
     <p v-else>Nenhuma tarefa criada.</p>
 
-    <TarefaSalvar v-if="exibirFormulario" @criar="criarTarefa" />
+    <TarefaSalvar v-if="exibirFormulario" :tarefa="tarefaSelecionada" @criar="criarTarefa" @editar="editarTarefa" />
 </div>
 </template>
 
@@ -37,7 +37,8 @@ export default {
     data() {
         return {
             tarefas: [],
-            exibirFormulario: false
+            exibirFormulario: false,
+            tarefaSelecionada: undefined
         };
     },
     created() {
@@ -53,6 +54,13 @@ export default {
                 this.tarefas.push(response.data);
                 this.exibirFormulario = false;
             });
+        },
+        editarTarefa(tarefa) {
+            console.log('editar', tarefa)
+        },
+        selecionarTarefaParaEdicao(tarefa) {
+            this.tarefaSelecionada = tarefa;
+            this.exibirFormulario = true;
         }
     }
 };
