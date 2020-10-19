@@ -13,7 +13,7 @@
     </div>
 
     <ul class="list-group" v-if="tarefas.length > 0">
-        <TarefasListaIten v-for="tarefa in tarefas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" @deletar="deletarTarefa" @concluir="editarTarefa" />
+        <TarefasListaIten v-for="tarefa in tarefasOrdenadas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" @deletar="deletarTarefa" @concluir="editarTarefa" />
     </ul>
 
     <p v-else>Nenhuma tarefa criada.</p>
@@ -40,6 +40,16 @@ export default {
             exibirFormulario: false,
             tarefaSelecionada: undefined
         };
+    },
+    computed: {
+        tarefasOrdenadas() {
+            return this.tarefas.sort((t1, t2) => {
+                if (t1.concluido === t2.concluido) {
+                    return t1.titulo < t2.titulo ? -1 : t1.titulo > t2.titulo ? 1 : 0;
+                }
+                return t1.concluido - t2.concluido;
+            });
+        }
     },
     created() {
         axios.get(`${config.apiUrl}/tarefas`).then(response => {
@@ -86,7 +96,7 @@ export default {
         exibirFormularioCriarTarefa(event) {
             if (this.tarefaSelecionada) {
                 this.tarefaSelecionada = undefined;
-                return
+                return;
             }
 
             this.exibirFormulario = !this.exibirFormulario;
