@@ -14,6 +14,11 @@
       "id": 3,
       "titulo": "Aprender Axios",
       "concluido": false
+    },
+    {
+      "titulo": "Aprender vuex",
+      "concluido": false,
+      "id": 4
     }
   ]
 }
