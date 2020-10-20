@@ -11,9 +11,10 @@
       "id": 4
     },
     {
-      "titulo": "Aprender neo4j com node",
+      "titulo": "Aprender neo4j com nodejs",
       "concluido": false,
-      "id": 5
+      "id": 5,
+      "curso": "VueJS"
     },
     {
       "titulo": "teste",
