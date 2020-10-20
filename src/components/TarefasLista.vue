@@ -12,11 +12,15 @@
         </div>
     </div>
 
-    <ul class="list-group" v-if="tarefas.length > 0">
+    <ul class="list-group" v-if="tarefasOrdenadas.length > 0">
         <TarefasListaIten v-for="tarefa in tarefasOrdenadas" :key="tarefa.id" :tarefa="tarefa" @editar="selecionarTarefaParaEdicao" @deletar="deletarTarefa" @concluir="editarTarefa" />
     </ul>
 
-    <p v-else>Nenhuma tarefa criada.</p>
+    <p v-else-if="!mensagemErro">Nenhuma tarefa criada.</p>
+
+    <div class="alert alert-danger" v-else>
+        {{ mensagemErro }}
+    </div>
 
     <TarefaSalvar v-if="exibirFormulario" :tarefa="tarefaSelecionada" @criar="criarTarefa" @editar="editarTarefa" />
 </div>
@@ -38,7 +42,8 @@ export default {
         return {
             tarefas: [],
             exibirFormulario: false,
-            tarefaSelecionada: undefined
+            tarefaSelecionada: undefined,
+            mensagemErro: undefined
         };
     },
     computed: {
@@ -52,10 +57,32 @@ export default {
         }
     },
     created() {
-        axios.get(`${config.apiUrl}/tarefas`).then(response => {
-            console.log("POST / tarefas", response.data);
-            this.tarefas = response.data;
-        });
+        axios
+            .get(`${config.apiUrl}/tarefas`)
+            .then(
+                response => {
+                    console.log("POST / tarefas", response.data);
+                    this.tarefas = response.data;
+                },
+                error => {
+                    console.log("Erro capturado no then: ", error);
+                    return Promise.reject(error);
+                }
+            )
+            .catch(error => {
+                console.log("Erro capturado no catch: ", error);
+                if (error.response) {
+                    this.mensagemErro = `Servidor retornou um erro: ${error.message} ${error.response.statusText}`;
+                    console.log("Erro [resposta]", error.response);
+                } else if (error.request) {
+                    this.mensagemErro = `Erro ao tentar comunicar com o servidor: ${error.message}`;
+                    console.log("Erro [requisicao]: ", error.request);
+                } else {
+                    this.mensagemErro = `Erro ao fazer requisicao ao servidor: ${error.message}`
+                }
+            }).then(() => {
+                console.log('sempre executado')
+            });
     },
     methods: {
         criarTarefa(tarefa) {
