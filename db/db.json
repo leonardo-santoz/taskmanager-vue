@@ -1,11 +1,6 @@
 {
   "tarefas": [
     {
-      "id": 3,
-      "titulo": "Aprender Axios",
-      "concluido": true
-    },
-    {
       "titulo": "Aprender vuetify",
       "concluido": true,
       "id": 4
