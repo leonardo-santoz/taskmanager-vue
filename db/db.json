@@ -12,7 +12,7 @@
     },
     {
       "titulo": "Aprender neo4j com nodejs",
-      "concluido": false,
+      "concluido": true,
       "id": 5,
       "curso": "VueJS"
     },
