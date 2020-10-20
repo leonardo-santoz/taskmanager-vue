@@ -60,7 +60,7 @@ export default {
             .get(`/tarefas`)
             .then(
                 response => {
-                    console.log("POST / tarefas", response.data);
+                    console.log("GET / tarefas", response.data);
                     this.tarefas = response.data;
                 },
                 error => {
