@@ -32,4 +32,21 @@ instance.interceptors.request.use(
   }
 );
 
+// instance.interceptors.response.use(
+// response => {
+// console.log('Interceptando resposta...', response);
+
+// if (Array.isArray(response.data)) {
+//   respnse.data = response.data.slice(1, 3);
+// }
+
+// return response;
+// },
+// error => {
+//   console.log('Erro capturado no interceptador de respostas: ', error);
+
+//   return Promise.reject(error);
+// }
+// );
+
 export default instance;
