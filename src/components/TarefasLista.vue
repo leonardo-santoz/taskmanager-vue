@@ -59,22 +59,26 @@ export default {
     },
     methods: {
         criarTarefa(tarefa) {
-            axios.post(`${config.apiUrl}/tarefas`, tarefa).then(response => {
-                console.log("POST / tarefas", response);
-                this.tarefas.push(response.data);
-                this.resetar();
+            // axios.post(`${config.apiUrl}/tarefas`, tarefa).then(response => {
+            //     console.log("POST / tarefas", response);
+            //     this.tarefas.push(response.data);
+            //     this.resetar();
+            // });
+
+            axios.request({
+                method: "post",
+                baseURL: config.apiUrl,
+                url: "/tarefas",
+                data: tarefa
             });
         },
         editarTarefa(tarefa) {
-            console.log("editar", tarefa);
-            axios
-                .put(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa)
-                .then(response => {
-                    console.log(`PUT /tarefas/${tarefa.id}`, response);
-                    const indice = this.tarefas.findIndex(t => t.id === tarefa.id);
-                    this.tarefas.splice(indice, 1, tarefa);
-                    this.resetar();
-                });
+            axios.put(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa).then(response => {
+                console.log(`PUT /talrefas/${tarefa.id}`, response);
+                const indice = this.tarefas.findIndex(t => t.id === tarefa.id);
+                this.tarefas.splice(indice, 1, tarefa);
+                this.resetar();
+            });
         },
         deletarTarefa(tarefa) {
             const confirmar = window.confirm(

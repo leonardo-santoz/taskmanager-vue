@@ -7,11 +7,11 @@
     },
     {
       "titulo": "Aprender vuetify",
-      "concluido": false,
+      "concluido": true,
       "id": 4
     },
     {
-      "titulo": "Aprender neo4j",
+      "titulo": "Aprender neo4j com node",
       "concluido": false,
       "id": 5
     }
