@@ -27,9 +27,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from './../axios';
 
-import config from "./../config/config";
 import TarefaSalvar from "./TarefaSalvar.vue";
 import TarefasListaIten from "./TarefasListaIten.vue";
 
@@ -58,7 +57,7 @@ export default {
     },
     created() {
         axios
-            .get(`${config.apiUrl}/tarefas`)
+            .get(`/tarefas`)
             .then(
                 response => {
                     console.log("POST / tarefas", response.data);
@@ -86,21 +85,21 @@ export default {
     },
     methods: {
         criarTarefa(tarefa) {
-            // axios.post(`${config.apiUrl}/tarefas`, tarefa).then(response => {
-            //     console.log("POST / tarefas", response);
-            //     this.tarefas.push(response.data);
-            //     this.resetar();
-            // });
-
-            axios.request({
-                method: "post",
-                baseURL: config.apiUrl,
-                url: "/tarefas",
-                data: tarefa
+            axios.post(`/tarefas`, tarefa).then(response => {
+                console.log("POST / tarefas", response);
+                this.tarefas.push(response.data);
+                this.resetar();
             });
+
+            // axios.request({
+            //     method: "post",
+            //     baseURL: axios.baseURL,
+            //     url: "/tarefas",
+            //     data: tarefa
+            // });
         },
         editarTarefa(tarefa) {
-            axios.put(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa).then(response => {
+            axios.put(`/tarefas/${tarefa.id}`, tarefa).then(response => {
                 console.log(`PUT /talrefas/${tarefa.id}`, response);
                 const indice = this.tarefas.findIndex(t => t.id === tarefa.id);
                 this.tarefas.splice(indice, 1, tarefa);
@@ -113,7 +112,7 @@ export default {
             );
 
             if (confirmar) {
-                axios.delete(`${config.apiUrl}/tarefas/${tarefa.id}`).then(response => {
+                axios.delete(`/tarefas/${tarefa.id}`).then(response => {
                     console.log(`DELETE /tarefas/${tarefa.id}`, response);
                     const indice = this.tarefas.findIndex(t => t.id === tarefa.id);
                     this.tarefas.splice(indice, 1, tarefa);
